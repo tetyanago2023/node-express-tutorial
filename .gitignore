@@ -1,0 +1,5 @@
+/node_modules
+.DS_Store
+/content/big.txt
+answers/temporary/*
+!answers/temporary/*.txt
