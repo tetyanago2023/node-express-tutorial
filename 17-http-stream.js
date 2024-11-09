@@ -1,6 +1,4 @@
-// app.js
-
-// console.log('Welcome to Node Tutorial');
+// 17-http-stream.js
 
 var http = require('http')
 var fs = require('fs')
@@ -17,4 +15,4 @@ http
             res.end(err)
         })
     })
-    .listen(5000)
+    .listen(3000)
