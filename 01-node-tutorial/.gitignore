@@ -1,5 +1,5 @@
 /node_modules
 .DS_Store
-/content/big.txt
+/01-node-tutorial/content/big.txt
 answers/temporary/*
 !answers/temporary/*.txt
