@@ -2,7 +2,7 @@
 
 const express = require('express');
 const app = express();
-const { products } = require('./data');
+const { products } = require('../data');
 
 app.get('/', (req, res) => {
     res.send('<h1>Home page</h1><a href="/api/products">products</a>')
