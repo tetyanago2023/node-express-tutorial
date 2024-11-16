@@ -1,11 +1,9 @@
-// app.js
-
-console.log('Express Tutorial');
+// 09-middleware-use.js
 
 const express = require('express');
 const app = express();
-const logger = require('./logger');
-const authorize = require('./authorize');
+const logger = require('../logger');
+const authorize = require('../authorize');
 
 // req => middleware => res
 
