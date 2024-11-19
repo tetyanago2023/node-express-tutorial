@@ -19,14 +19,6 @@ app.use(express.json())
 app.use('/api/people', people)
 app.use('/login', auth)
 
-app.post('/login', (req, res) => {
-    const { name } = req.body;
-    if(name) {
-        return res.status(200).send(`Welcome ${name}!`)
-    }
-    res.status(401).send('Please provide credentials');
-})
-
 app.listen(5000, () => {
     console.log('Server is running on http://localhost:5000');
 })
