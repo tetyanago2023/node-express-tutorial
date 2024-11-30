@@ -1,5 +1,4 @@
 // connect.js
-// I_am_from_Ukraine
 
 const mongoose = require('mongoose');
 
