@@ -2,12 +2,14 @@
 
 console.log('04 Store API')
 
+require('dotenv').config();
+require('express-async-errors');
+
 const express = require('express');
 const app = express();
 const connectDB = require('./db/connect');
 const productsRouter = require('./routes/products');
 const PORT = process.env.PORT || 3000;
-require('dotenv').config();
 // async errors
 
 const notFoundMiddleware = require('./middleware/not-found');
