@@ -12,13 +12,14 @@ const getAllProductsStatic = async (req, res) => {
     // const products = await Product.find({ page: '2' });
     // const products = await Product.find({}).sort('name'); // sort by name
     // const products = await Product.find({}).sort('-name'); // sort by name
-    const products = await Product.find({}).sort('-name price'); // sort by name & price
+    // const products = await Product.find({}).sort('-name price'); // sort by name & price
+    const products = await Product.find({}).select('name price'); // select some fields
     res.status(200).json({ products, nbHits: products.length });
 }
 
 const getAllProducts = async (req, res) => {
     // const { featured, company, name } = req.query; // find products by query
-    const { featured, company, name, sort } = req.query; // find products by query & sort
+    const { featured, company, name, sort, fields } = req.query; // find products by query & sort
 
     const queryObject = {};
 
@@ -38,12 +39,17 @@ const getAllProducts = async (req, res) => {
     // console.log(queryObject);
     // const products = await Product.find(queryObject); // find products by query w/o sorting
     let result = Product.find(queryObject); // find products by query w/o sorting
-
+    // sort
     if (sort) {
         const sortedList = sort.split(',').join(' ');
         result = result.sort(sortedList);
     } else {
         result = result.sort('createdAt');
+    }
+    // select some fields
+    if (fields) {
+        const fieldsList = fields.split(',').join(' ');
+        result = result.select(fieldsList);
     }
 
     const products = await result;
