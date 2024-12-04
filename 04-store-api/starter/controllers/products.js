@@ -19,18 +19,22 @@ const getAllProductsStatic = async (req, res) => {
     //     .sort('name')
     //     .select('name price')
     //     .limit(10); // sort by name select some fields & show only 10 first items
-    const products = await Product.find({})
-        .sort('name')
-        .select('name price')
-        .limit(10)
-        .skip(1); // sort by name select some fields & show only 10 first items & skip the first item
+    // const products = await Product.find({})
+    //     .sort('name')
+    //     .select('name price')
+    //     .limit(10)
+    //     .skip(1); // sort by name select some fields & show only 10 first items & skip the first item
+    const products = await Product.find({price: {$gt: 30}})
+        .sort('price')
+        .select('name price company'); // sort by price & select some fields
     // res.status(200).json({ products, nbHits: products.length });
     res.status(200).json({ nbHits: products.length, products });
 }
 
 const getAllProducts = async (req, res) => {
     // const { featured, company, name } = req.query; // find products by query
-    const { featured, company, name, sort, fields } = req.query; // find products by query & sort
+    // const { featured, company, name, sort, fields } = req.query; // find products by query & sort
+    const { featured, company, name, sort, fields, numericFilters } = req.query; // find products by query & sort using numericFilters
 
     const queryObject = {};
 
@@ -47,7 +51,21 @@ const getAllProducts = async (req, res) => {
         queryObject.name = { $regex: name, $options: 'i'};
     }
 
-    // console.log(queryObject);
+    if (numericFilters) {
+        const operatorMap = {
+            '>': '$gt',
+            '>=': '$gte',
+            '=': '$eq',
+            '<': '$lt',
+            '<=': '$lte',
+        }
+        const regEx = /\b(>|>=|=|<|<=)\b/g;
+        let filters = numericFilters.replace(regEx, (match) => `-${operatorMap[match]}-`);
+
+        // console.log(numericFilters);
+        console.log(filters);
+    }
+    console.log(queryObject);
     // const products = await Product.find(queryObject); // find products by query w/o sorting
     let result = Product.find(queryObject); // find products by query w/o sorting
     // sort
@@ -70,7 +88,7 @@ const getAllProducts = async (req, res) => {
     result = result.skip(skip).limit(limit);
 
     const products = await result;
-    res.status(200).json({ products, nbHits: products.length });
+    res.status(200).json({ nbHits: products.length, products });
 }
 
 module.exports = {
