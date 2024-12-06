@@ -1,13 +1,13 @@
 // auth.js
 
 const jwt = require('jsonwebtoken');
-const CustomAPIError = require('../errors/custom-error');
+const { UnauthenticatedError } = require('../errors');
 
 const authenticationMiddleware = async (req, res, next) => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        throw new CustomAPIError(`No token provided`, 401)
+        throw new UnauthenticatedError(`No token provided`)
     }
 
     const token = authHeader.split(' ')[1];
@@ -17,14 +17,9 @@ const authenticationMiddleware = async (req, res, next) => {
 
         req.user  = { id, username }
         next();
-        // const luckyNumber = Math.floor(Math.random() * 100)
-        // res.status(200).json({msg: `Hello, ${decoded.username}!`,
-        //     secret: `Here is your authorized data, your lucky number is ${luckyNumber}`})
     } catch (error){
-        throw new CustomAPIError(`Not authorized to access this route`, 401)
+        throw new UnauthenticatedError(`Not authorized to access this route`)
     }
-
-
 }
 
 module.exports = authenticationMiddleware;
