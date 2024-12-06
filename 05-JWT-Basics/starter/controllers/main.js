@@ -4,7 +4,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const { BadRequest } = require('../errors');
 
-const login = async (req, res) => {
+const logon = async (req, res) => {
     const { username, password } = req.body;
 
     if (!username || !password) {
@@ -19,13 +19,13 @@ const login = async (req, res) => {
     res.status(200).json({msg: `User created`, token});
 }
 
-const dashboard = async (req, res) => {
+const hello = async (req, res) => {
     const luckyNumber = Math.floor(Math.random() * 100)
     res.status(200).json({msg: `Hello, ${req.user.username}!`,
         secret: `Here is your authorized data, your lucky number is ${luckyNumber}`})
 }
 
 module.exports = {
-    login,
-    dashboard,
+    logon,
+    hello,
 }

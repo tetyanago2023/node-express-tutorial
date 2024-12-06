@@ -17,7 +17,7 @@ formDOM.addEventListener('submit', async (e) => {
     const password = passwordInputDOM.value
 
     try {
-        const { data } = await axios.post('/api/v1/login', { username, password })
+        const { data } = await axios.post('/api/v1/logon', { username, password })
 
         formAlertDOM.style.display = 'block'
         formAlertDOM.textContent = data.msg
@@ -46,7 +46,7 @@ formDOM.addEventListener('submit', async (e) => {
 btnDOM.addEventListener('click', async () => {
     const token = localStorage.getItem('token')
     try {
-        const { data } = await axios.get('/api/v1/dashboard', {
+        const { data } = await axios.get('/api/v1/hello', {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
